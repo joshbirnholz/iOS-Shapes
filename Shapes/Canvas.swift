@@ -8,9 +8,20 @@ import UIKit
 
 /// The surface that all objects are added to. The canvas center point is (0,0) and is located in the visual center of the canvas.
 /// - localizationKey: Canvas
-public class Canvas: Equatable {
-	public static func == (lhs: Canvas, rhs: Canvas) -> Bool {
-		return lhs.backingView == rhs.backingView
+public class Canvas: UIView {
+	
+	weak private var frameChangeDelegate: FrameChangeDelegate?
+	
+	private var previousFrame = CGRect.zero
+	
+	public override func layoutSubviews() {
+		super.layoutSubviews()
+		
+		// only notify the delegate if the frame actually changed.
+		if (previousFrame != frame) {
+			frameChangeDelegate?.frameDidChange()
+		}
+		previousFrame = frame
 	}
 	
     fileprivate let grid = Grid()
@@ -30,7 +41,7 @@ public class Canvas: Equatable {
     /// - localizationKey: Canvas.color
     public var color = Color.clear {
         didSet {
-            backingView.backgroundColor = color.uiColor
+            backgroundColor = color.uiColor
         }
     }
     
@@ -38,8 +49,8 @@ public class Canvas: Equatable {
     /// - localizationKey: Canvas.visibleSize
     public var visibleSize: Size {
         get {
-            let modelWidth = convertMagnitudeFromScreen(screenMagnitude: Double(backingView.frame.width))
-            let modelHeight = convertMagnitudeFromScreen(screenMagnitude: Double(backingView.frame.height))
+            let modelWidth = convertMagnitudeFromScreen(screenMagnitude: Double(frame.width))
+            let modelHeight = convertMagnitudeFromScreen(screenMagnitude: Double(frame.height))
             return Size(width: modelWidth, height: modelHeight)
         }
     }
@@ -51,7 +62,7 @@ public class Canvas: Equatable {
             // convert the current UITouches into an array of points.
             var points: [Point] = []
             for touch in touchGestureRecognizer.currentTouches {
-                let screenTouchPoint = Point(touch.location(in: backingView))
+                let screenTouchPoint = Point(touch.location(in: self))
                 let modelTouchPoint = convertPointFromScreen(screenPoint: screenTouchPoint)
                 points.append(modelTouchPoint)
             }
@@ -68,25 +79,30 @@ public class Canvas: Equatable {
     
     fileprivate var touchGestureRecognizer: TouchGestureRecognizer
     
-    internal let backingView: UIView = FrameChangeNotifyingView()
-    
     internal init() {
-        
-        backingView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        
+		
+		touchGestureRecognizer = TouchGestureRecognizer()
+		
+		super.init(frame: .zero)
+		
+        autoresizingMask = [.flexibleWidth, .flexibleHeight]
+		
         grid.backingView.gridStrideInPoints = numPointsPerUnit
-        
+		
         // add the grid.
-        backingView.insertSubview(grid.backingView, at: 0)
+        insertSubview(grid.backingView, at: 0)
 
-        touchGestureRecognizer = TouchGestureRecognizer()
         touchGestureRecognizer.touchDelegate = self
-        backingView.addGestureRecognizer(touchGestureRecognizer)
+        addGestureRecognizer(touchGestureRecognizer)
         
-        let frameChangeNotifyingView = backingView as! FrameChangeNotifyingView
+        let frameChangeNotifyingView = self
         frameChangeNotifyingView.frameChangeDelegate = self
     }
-    
+	
+	required init?(coder aDecoder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+	
     internal func addDrawable(drawable: AbstractDrawable) {
         // if the drawable is already on the canvas, just return.
 		guard drawables.firstIndex(of: drawable) == nil else { return }
@@ -100,7 +116,7 @@ public class Canvas: Equatable {
 		}
 		
         drawables.append(drawable)
-        backingView.addSubview(drawable.backingView)
+        addSubview(drawable.backingView)
         centerDrawable(drawable: drawable)
     }
     
@@ -159,24 +175,24 @@ public class Canvas: Equatable {
     
     // MARK: Interaction API
     
-    fileprivate var onTouchDownHandler: (() -> Void)?
+    fileprivate var onTouchDownHandler: ((Point) -> Void)?
     /// A code block that is called for when a touch down occurs on this object.
     /// - localizationKey: Canvas.onTouchDown
-    public func onTouchDown(handler: @escaping () -> Void) {
+    public func onTouchDown(handler: @escaping (Point) -> Void) {
         onTouchDownHandler = handler
     }
     
-    fileprivate var onTouchUpHandler: (() -> Void)?
+    fileprivate var onTouchUpHandler: ((Point) -> Void)?
     /// A code block that is called for when a touch up occurs on this object.
     /// - localizationKey: Canvas.onTouchUp
-    public func onTouchUp(handler: @escaping () -> Void) {
+    public func onTouchUp(handler: @escaping (Point) -> Void) {
         onTouchUpHandler = handler
     }
     
-    fileprivate var onTouchDragHandler: (() -> Void)?
+    fileprivate var onTouchDragHandler: ((Point) -> Void)?
     /// A code block that is called for when a drag occurs on this object.
     /// - localizationKey: Canvas.onTouchDrag
-    public func onTouchDrag(handler: @escaping () -> Void) {
+    public func onTouchDrag(handler: @escaping (Point) -> Void) {
         onTouchDragHandler = handler
     }
     
@@ -191,15 +207,33 @@ public class Canvas: Equatable {
 extension Canvas: TouchGestureRecognizerDelegate {
     
     func touchesBegan(touches: Set<UITouch>, with event: UIEvent) {
-        onTouchDownHandler?()
+		guard let touch = touches.first else { return }
+		
+		// remember the offset from the touch to our center point.
+		let screenLocation = touch.location(in: self)
+		let canvasPoint = self.convertPointFromScreen(screenPoint: screenLocation)
+		
+        onTouchDownHandler?(canvasPoint)
     }
     
     func touchesMoved(touches: Set<UITouch>, with event: UIEvent) {
-        onTouchDragHandler?()
+		guard let touch = touches.first else { return }
+		
+		// remember the offset from the touch to our center point.
+		let screenLocation = touch.location(in: self)
+		let canvasPoint = self.convertPointFromScreen(screenPoint: screenLocation)
+		
+        onTouchDragHandler?(canvasPoint)
     }
     
     func touchesEnded(touches: Set<UITouch>, with event: UIEvent) {
-        onTouchUpHandler?()
+		guard let touch = touches.first else { return }
+		
+		// remember the offset from the touch to our center point.
+		let screenLocation = touch.location(in: self)
+		let canvasPoint = self.convertPointFromScreen(screenPoint: screenLocation)
+		
+        onTouchUpHandler?(canvasPoint)
     }
     
     func touchesCancelled(touches: Set<UITouch>, with event: UIEvent) {
@@ -219,8 +253,8 @@ extension Canvas: FrameChangeDelegate {
         let oldOffset = offsetToCenterOfViewInScreenPoints
         
         // NOTE: for now the center of our canvas is literally its center.
-        offsetToCenterOfViewInScreenPoints = Point(backingView.center)
-        grid.backingView.frame = self.backingView.bounds
+        offsetToCenterOfViewInScreenPoints = Point(self.center)
+        grid.backingView.frame = self.bounds
         grid.backingView.offsetToCenterInScreenPoints = offsetToCenterOfViewInScreenPoints
         
         // calculate the delta between the previous center of the screen and the new center of the screen.
@@ -237,22 +271,4 @@ extension Canvas: FrameChangeDelegate {
 
 private protocol FrameChangeDelegate: class {
     func frameDidChange()
-}
-
-private class FrameChangeNotifyingView: UIView {
-
-    weak var frameChangeDelegate: FrameChangeDelegate?
-    
-    private var previousFrame = CGRect.zero
-    
-    fileprivate override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        // only notify the delegate if the frame actually changed.
-        if (previousFrame != frame) {
-            frameChangeDelegate?.frameDidChange()
-        }
-        previousFrame = frame
-    }
-    
 }

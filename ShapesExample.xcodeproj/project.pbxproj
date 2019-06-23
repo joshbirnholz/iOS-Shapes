@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5414AF1D22B1AB64009B8159 /* Simon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5414AF1C22B1AB64009B8159 /* Simon.swift */; };
 		5499E2C5229F75690085E4F0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5499E2C4229F75690085E4F0 /* AppDelegate.swift */; };
 		5499E2C7229F75690085E4F0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5499E2C6229F75690085E4F0 /* ViewController.swift */; };
 		5499E2CA229F75690085E4F0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5499E2C8229F75690085E4F0 /* Main.storyboard */; };
@@ -30,6 +31,7 @@
 		5499E302229F75C30085E4F0 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5499E2F4229F75C30085E4F0 /* Image.swift */; };
 		5499E303229F75C30085E4F0 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5499E2F5229F75C30085E4F0 /* Line.swift */; };
 		5499E305229F818A0085E4F0 /* CanvasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5499E304229F818A0085E4F0 /* CanvasViewController.swift */; };
+		54CE1E5A22BFE4FD00A0F135 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54CE1E5922BFE4FD00A0F135 /* Animation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +59,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5414AF1C22B1AB64009B8159 /* Simon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Simon.swift; sourceTree = "<group>"; };
 		5499E2C1229F75690085E4F0 /* ShapesExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShapesExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5499E2C4229F75690085E4F0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5499E2C6229F75690085E4F0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -82,6 +85,7 @@
 		5499E2F4229F75C30085E4F0 /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		5499E2F5229F75C30085E4F0 /* Line.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		5499E304229F818A0085E4F0 /* CanvasViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasViewController.swift; sourceTree = "<group>"; };
+		54CE1E5922BFE4FD00A0F135 /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +130,7 @@
 			children = (
 				5499E2C4229F75690085E4F0 /* AppDelegate.swift */,
 				5499E2C6229F75690085E4F0 /* ViewController.swift */,
+				5414AF1C22B1AB64009B8159 /* Simon.swift */,
 				5499E2C8229F75690085E4F0 /* Main.storyboard */,
 				5499E2CB229F756A0085E4F0 /* Assets.xcassets */,
 				5499E2CD229F756A0085E4F0 /* LaunchScreen.storyboard */,
@@ -138,6 +143,7 @@
 			isa = PBXGroup;
 			children = (
 				5499E2EA229F75C30085E4F0 /* AbstractDrawable.swift */,
+				54CE1E5922BFE4FD00A0F135 /* Animation.swift */,
 				5499E2EF229F75C30085E4F0 /* AbstractShape.swift */,
 				5499E2EC229F75C30085E4F0 /* Canvas.swift */,
 				5499E304229F818A0085E4F0 /* CanvasViewController.swift */,
@@ -273,6 +279,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5499E2C7229F75690085E4F0 /* ViewController.swift in Sources */,
+				5414AF1D22B1AB64009B8159 /* Simon.swift in Sources */,
 				5499E2C5229F75690085E4F0 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -291,6 +298,7 @@
 				5499E302229F75C30085E4F0 /* Image.swift in Sources */,
 				5499E2F8229F75C30085E4F0 /* AbstractDrawable.swift in Sources */,
 				5499E2FF229F75C30085E4F0 /* Text.swift in Sources */,
+				54CE1E5A22BFE4FD00A0F135 /* Animation.swift in Sources */,
 				5499E2FA229F75C30085E4F0 /* Canvas.swift in Sources */,
 				5499E301229F75C30085E4F0 /* Shadow.swift in Sources */,
 				5499E2F7229F75C30085E4F0 /* TouchGestureRecognizer.swift in Sources */,
