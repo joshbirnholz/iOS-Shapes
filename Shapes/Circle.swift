@@ -46,6 +46,7 @@ public class Circle: Shape {
     /// - Parameter radius: The distance from the center of the circle to its outside edge. Must be 0.0 or greater.
     /// - localizationKey: Circle(radius:)
 	public init(canvas: Canvas, radius: Double) {
+        self.radius = radius
         let diameter = radius * 2
 		super.init(canvas: canvas, modelSize: Size(width: diameter, height: diameter), backingView: AnimationLayerHitTestingView())
     }
@@ -53,6 +54,24 @@ public class Circle: Shape {
     internal override func sizeDidChange() {
         // we could use a shape mask and sublayers to draw the border, but using the corner radius works too.
         backingView.layer.cornerRadius = backingView.frame.width/2.0
+    }
+    
+    public override func overlaps(_ other: AbstractDrawable) -> Bool {
+        switch other {
+        case let circle as Circle:
+            return center.distance(toPoint: circle.center) < (radius + circle.radius)
+        case let rect as Rectangle:
+            let x = max(rect.center.x - rect.size.width/2, min(center.x, rect.center.x + rect.size.width/2))
+            let y = max(rect.center.y - rect.size.height/2, min(center.y, rect.center.y + rect.size.height/2))
+            return center.distance(toPoint: Point(x:x,y:y)) < radius
+        case let image as Image:
+            let center = canvas.convertPointFromScreen(screenPoint: image.backingView.center)
+        case let text as Text:
+            let center = canvas.convertPointFromScreen(screenPoint: text.backingView.center)
+        default:
+            return false
+        }
+        return false
     }
 }
 

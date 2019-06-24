@@ -113,6 +113,21 @@ public class AbstractDrawable: Equatable {
 	public func onTouchCancelled(_ handler: @escaping () -> Void) {
 		onTouchCancelledHandler = handler
 	}
+    
+    public func overlaps(_ other: AbstractDrawable) -> Bool {
+        //        switch other {
+        //        case let circle as Circle:
+        //
+        //        case let rect as Rectangle:
+        //
+        //        case let image as Image:
+        //            let center = canvas.convertPointFromScreen(screenPoint: image.backingView.center)
+        //        case let text as Text:
+        //            let center = canvas.convertPointFromScreen(screenPoint: text.backingView.center)
+        //        default:
+        //            return false
+        return false
+    }
 	
 	// MARK: Internal
 	
@@ -268,6 +283,7 @@ extension AbstractDrawable: TouchGestureRecognizerDelegate {
 			self.rotation = self.rotation - (.pi / 4)
 		}
 	}
+	
 }
 
 // MARK: Equatable protocol
