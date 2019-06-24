@@ -37,9 +37,10 @@ public struct Point {
         x = Double(cgPoint.x)
         y = Double(cgPoint.y)
     }
-    
-    public func distance(toPoint p:Point) -> Double {
-        return sqrt(pow(x - p.x, 2) + pow(y - p.y, 2))
+	
+	
+    public func distance(to point: Point) -> Double {
+        return sqrt(pow(x - point.x, 2) + pow(y - point.y, 2))
     }
 }
 

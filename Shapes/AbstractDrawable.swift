@@ -86,10 +86,10 @@ public class AbstractDrawable: Equatable {
 	
 	// MARK: Interaction API
 	
-	fileprivate var onTouchDownHandler: ((Point) -> Void)?
+	fileprivate var onTouchDownHandler: (() -> Void)?
 	/// A code block that is called for when a touch down occurs on this object.
 	/// - localizationKey: AbstractDrawable.onTouchDown(_:)
-	public func onTouchDown(_ handler: @escaping (Point) -> Void) {
+	public func onTouchDown(_ handler: @escaping () -> Void) {
 		onTouchDownHandler = handler
 	}
 	
@@ -100,10 +100,10 @@ public class AbstractDrawable: Equatable {
 		onTouchUpHandler = handler
 	}
 	
-	fileprivate var onTouchDragHandler: ((Point) -> Void)?
+	fileprivate var onTouchDragHandler: (() -> Void)?
 	/// A code block that is called for when a drag occurs on this object.
 	/// - localizationKey: AbstractDrawable.onTouchDrag(_:)
-	public func onTouchDrag(_ handler: @escaping (Point) -> Void) {
+	public func onTouchDrag(_ handler: @escaping () -> Void) {
 		onTouchDragHandler = handler
 	}
 	
@@ -141,7 +141,8 @@ public class AbstractDrawable: Equatable {
 	/// - localizationKey: AbstractDrawable.center
 	public var center: Point {
 		get {
-			return canvas.convertPointFromScreen(screenPoint: backingView.center)
+			let frame = backingView.layer.presentation()?.frame ?? backingView.layer.frame
+			return canvas.convertPointFromScreen(screenPoint: CGPoint(x: frame.midX, y: frame.midY))
 		}
 		set {
 			let screenPoint = canvas.convertPointToScreen(modelPoint: newValue)
@@ -233,7 +234,7 @@ extension AbstractDrawable: TouchGestureRecognizerDelegate {
 		offsetFromTouchToCenter = Point(x: canvasPoint.x - center.x, y: canvasPoint.y - center.y)
 		
 		// notify the handler of the touch-down.
-		onTouchDownHandler?(canvasPoint)
+		onTouchDownHandler?()
 	}
 	
 	func touchesMoved(touches: Set<UITouch>, with event: UIEvent) {
@@ -251,7 +252,7 @@ extension AbstractDrawable: TouchGestureRecognizerDelegate {
 		}
 		
 		// notify the handler of the dragged touch.
-		onTouchDragHandler?(canvasPoint)
+		onTouchDragHandler?()
 	}
 	
 	func touchesEnded(touches: Set<UITouch>, with event: UIEvent) {
@@ -288,4 +289,16 @@ extension AbstractDrawable: TouchGestureRecognizerDelegate {
 // MARK: Equatable protocol
 public func ==(lhs: AbstractDrawable, rhs: AbstractDrawable) -> Bool {
 	return lhs === rhs
+}
+
+/// https://stackoverflow.com/a/43684094
+internal class AnimationLayerHitTestingView: UIView {
+	override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+		guard let pres = self.layer.presentation(), let superview = superview else {
+			return super.hitTest(point, with: event)
+		}
+		let superviewPoint = convert(point, to: superview)
+		let presentationPoint = superview.layer.convert(superviewPoint, to: pres)
+		return super.hitTest(presentationPoint, with: event)
+	}
 }

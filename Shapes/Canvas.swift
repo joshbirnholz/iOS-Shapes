@@ -175,24 +175,24 @@ public class Canvas: UIView {
     
     // MARK: Interaction API
     
-    fileprivate var onTouchDownHandler: ((Point) -> Void)?
+    fileprivate var onTouchDownHandler: (() -> Void)?
     /// A code block that is called for when a touch down occurs on this object.
     /// - localizationKey: Canvas.onTouchDown
-    public func onTouchDown(handler: @escaping (Point) -> Void) {
+    public func onTouchDown(handler: @escaping () -> Void) {
         onTouchDownHandler = handler
     }
     
-    fileprivate var onTouchUpHandler: ((Point) -> Void)?
+    fileprivate var onTouchUpHandler: (() -> Void)?
     /// A code block that is called for when a touch up occurs on this object.
     /// - localizationKey: Canvas.onTouchUp
-    public func onTouchUp(handler: @escaping (Point) -> Void) {
+    public func onTouchUp(handler: @escaping () -> Void) {
         onTouchUpHandler = handler
     }
     
-    fileprivate var onTouchDragHandler: ((Point) -> Void)?
+    fileprivate var onTouchDragHandler: (() -> Void)?
     /// A code block that is called for when a drag occurs on this object.
     /// - localizationKey: Canvas.onTouchDrag
-    public func onTouchDrag(handler: @escaping (Point) -> Void) {
+    public func onTouchDrag(handler: @escaping () -> Void) {
         onTouchDragHandler = handler
     }
     
@@ -207,33 +207,15 @@ public class Canvas: UIView {
 extension Canvas: TouchGestureRecognizerDelegate {
     
     func touchesBegan(touches: Set<UITouch>, with event: UIEvent) {
-		guard let touch = touches.first else { return }
-		
-		// remember the offset from the touch to our center point.
-		let screenLocation = touch.location(in: self)
-		let canvasPoint = self.convertPointFromScreen(screenPoint: screenLocation)
-		
-        onTouchDownHandler?(canvasPoint)
+		onTouchDownHandler?()
     }
     
     func touchesMoved(touches: Set<UITouch>, with event: UIEvent) {
-		guard let touch = touches.first else { return }
-		
-		// remember the offset from the touch to our center point.
-		let screenLocation = touch.location(in: self)
-		let canvasPoint = self.convertPointFromScreen(screenPoint: screenLocation)
-		
-        onTouchDragHandler?(canvasPoint)
+        onTouchDragHandler?()
     }
     
     func touchesEnded(touches: Set<UITouch>, with event: UIEvent) {
-		guard let touch = touches.first else { return }
-		
-		// remember the offset from the touch to our center point.
-		let screenLocation = touch.location(in: self)
-		let canvasPoint = self.convertPointFromScreen(screenPoint: screenLocation)
-		
-        onTouchUpHandler?(canvasPoint)
+        onTouchUpHandler?()
     }
     
     func touchesCancelled(touches: Set<UITouch>, with event: UIEvent) {

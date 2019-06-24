@@ -6,9 +6,6 @@
 
 import UIKit
 
-private let DefaultWidth = 10.0
-private let DefaultHeight = 10.0
-
 /// A rectangle on the canvas.
 ///
 ///   - `size` The width and height of the rectangle.
@@ -26,11 +23,14 @@ private let DefaultHeight = 10.0
 ///   - `shadow` The drop shadow for this object. The default is nil, which results in no shadow. To add a shadow, you can set this property, like this: `myObject.dropShadow = Shadow()`.
 /// - localizationKey: Rectangle
 public class Rectangle: Shape {
+	
+	private static let DefaultWidth = 10.0
+	private static let DefaultHeight = 10.0
     
     /// Creates a rectangle centered on the canvas with a default `width` (10.0), `height` (10.0) and `cornerRadius` (0.0).
     /// - localizationKey: Rectangle()
 	public convenience init(canvas: Canvas) {
-		self.init(canvas: canvas, width: DefaultWidth, height: DefaultHeight)
+		self.init(canvas: canvas, width: Rectangle.DefaultWidth, height: Rectangle.DefaultHeight)
     }
     
     /// Creates a rectangle centered on the canvas.
@@ -41,7 +41,7 @@ public class Rectangle: Shape {
     /// - localizationKey: Rectangle(width:height:cornerRadius:)
 	public init(canvas: Canvas, width: Double, height: Double, cornerRadius: Double = 0.0) {
         let size = Size(width: width, height: height)
-		super.init(canvas: canvas, modelSize: size, backingView: UIView())
+		super.init(canvas: canvas, modelSize: size, backingView: AnimationLayerHitTestingView())
         
         self.size = size
         self.cornerRadius = cornerRadius

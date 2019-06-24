@@ -48,7 +48,7 @@ public class Circle: Shape {
 	public init(canvas: Canvas, radius: Double) {
         self.radius = radius
         let diameter = radius * 2
-		super.init(canvas: canvas, modelSize: Size(width: diameter, height: diameter), backingView: UIView())
+		super.init(canvas: canvas, modelSize: Size(width: diameter, height: diameter), backingView: AnimationLayerHitTestingView())
     }
     
     internal override func sizeDidChange() {
@@ -59,11 +59,11 @@ public class Circle: Shape {
     public override func overlaps(_ other: AbstractDrawable) -> Bool {
         switch other {
         case let circle as Circle:
-            return center.distance(toPoint: circle.center) < (radius + circle.radius)
+			return center.distance(to: circle.center) < (radius + circle.radius)
         case let rect as Rectangle:
             let x = max(rect.center.x - rect.size.width/2, min(center.x, rect.center.x + rect.size.width/2))
             let y = max(rect.center.y - rect.size.height/2, min(center.y, rect.center.y + rect.size.height/2))
-            return center.distance(toPoint: Point(x:x,y:y)) < radius
+			return center.distance(to: Point(x:x,y:y)) < radius
         case let image as Image:
             let x = max(image.center.x - image.size.width/2, min(center.x, image.center.x + image.size.width/2))
             let y = max(image.center.y - image.size.height/2, min(center.y, image.center.y + image.size.height/2))
