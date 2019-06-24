@@ -13,30 +13,17 @@ class ViewController: CanvasViewController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+        let rect = Rectangle(width: 20, height: 30)
+        rect.color = .blue
 		
 		canvas.onTouchUp { (point) in
-			let circle = self.Circle()
-			circle.center = point
-			circle.color = .random()
-			
-			let moveRight = Animation(duration: 1, delay: 0) {
-				circle.center.x += 20
-				circle.color = .random()
-			}
-			let moveLeft = Animation(duration: 1, delay: 0) {
-				circle.center.x -= 20
-				circle.color = .random()
-			}
-			let moveUp = Animation(duration: 1, delay: 0) {
-				circle.center.y += 20
-				circle.color = .random()
-			}
-			let moveDown = Animation(duration: 1, delay: 0) {
-				circle.center.y -= 20
-				circle.color = .random()
-			}
-			
-			animate(moveRight, moveUp, moveLeft, moveDown, loop: true)
+			let r2 = self.Circle(radius: 5)
+            r2.center = point
+            if (rect.overlaps(r2)) {
+                r2.color = .red
+            } else {
+                r2.color = .green
+            }
 		}
 		
 	}

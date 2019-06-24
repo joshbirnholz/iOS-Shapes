@@ -38,6 +38,9 @@ public struct Point {
         y = Double(cgPoint.y)
     }
     
+    public func distance(toPoint p:Point) -> Double {
+        return sqrt(pow(x - p.x, 2) + pow(y - p.y, 2))
+    }
 }
 
 extension Point: CustomPlaygroundDisplayConvertible {
