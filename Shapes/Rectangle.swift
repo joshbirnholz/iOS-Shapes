@@ -74,17 +74,15 @@ public class Rectangle: Shape {
             case let circle as Circle:
                 return circle.overlaps(self)
             case let rect as Rectangle:
-                if (abs(rect.center.x - center.x) > (size.width + rect.size.width)/2) {
-                    return false;
-                }
-                if (abs(rect.center.y - center.y) > (size.height + rect.size.height)/2) {
-                    return false;
-                }
+                if (abs(rect.center.x - center.x) > (size.width + rect.size.width)/2) { return false }
+                if (abs(rect.center.y - center.y) > (size.height + rect.size.height)/2) { return false }
                 return true;
             case let image as Image:
-                let center = canvas.convertPointFromScreen(screenPoint: image.backingView.center)
-            case let text as Text:
-                let center = canvas.convertPointFromScreen(screenPoint: text.backingView.center)
+                if (abs(image.center.x - center.x) > (size.width + image.size.width)/2) { return false }
+                if (abs(image.center.y - center.y) > (size.height + image.size.height)/2) { return false }
+                return true;
+            case let line as Line:
+                return false
             default:
                 return false
         }
