@@ -19,6 +19,22 @@ open class CanvasViewController: UIViewController {
 		view.backgroundColor = .white
 	}
 	
+	fileprivate var setupComplete: Bool = false
+	
+	open override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		
+		if !setupComplete {
+			setup()
+			setupComplete = true
+		}
+	}
+	
+	/// Use this method to draw shapes, lines, and more on the canvas.
+	open func setup() {
+		
+	}
+	
 	public typealias _ColorLiteralType = Color
 	
 }

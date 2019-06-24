@@ -102,12 +102,13 @@ public class Animator {
 		onFinishHandler = handler
 	}
 	
-	///
-	public init(animations: [Animation], repeats: Bool) {
+	/// Creates a new Animator, without starting the animations.
+	public init(animations: [Animation], repeats: Bool = false) {
 		self.animations = animations
 		self.repeats = repeats
 	}
 	
+	/// Creates a new Animator, without starting the animations.
 	public convenience init(animations: Animation..., repeats: Bool) {
 		self.init(animations: animations, repeats: repeats)
 	}
@@ -124,6 +125,18 @@ public class Animator {
 		}
 		
 		let current = animations[index]
+		
+		guard current.duration > 0 else {
+			return DispatchQueue.main.asyncAfter(deadline: .now() + current.delay) {
+				current.changes()
+				self.index += 1
+				guard self.state == .active else {
+					return
+				}
+				self.performNext()
+			}
+		}
+		
 		propertyAnimator = .runningPropertyAnimator(withDuration: current.duration,
 													delay: current.delay,
 													options: [.beginFromCurrentState, .allowUserInteraction, .allowAnimatedContent],

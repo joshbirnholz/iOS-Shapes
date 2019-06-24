@@ -44,10 +44,28 @@ class SimonGame {
 		}
 		
 		static func random() -> SimonColor {
-		return allCases.randomElement()!
+			return allCases.randomElement()!
 		}
 	}
 	
+	var score = 0
+	
+	var highScore: Int {
+		get {
+			return UserDefaults.standard.integer(forKey: #function)
+		}
+		set {
+			UserDefaults.standard.set(newValue, forKey: #function)
+			updateHighScoreText()
+		}
+	}
+	
+	func updateHighScoreText() {
+		highScoreText.string = "High Score: \(highScore)"
+	}
+	
+	var text: Text
+	var highScoreText: Text
 	var canvas: Canvas
 	var clickedColors: [SimonColor]
 	var colors: [SimonColor]
@@ -57,8 +75,19 @@ class SimonGame {
 	init(canvas: Canvas, size: Double) {
 		self.canvas = canvas
 		clickedColors = []
-		colors = [.green, .red, .yellow, .blue]
+		colors = []
 		rectangles = [:]
+		text = Text(canvas: canvas, string: "Tap to Start")
+		text.center.y += size + 4
+		text.color = .blue
+		text.fontSize = 30
+		
+		highScoreText = Text(canvas: canvas, string: "")
+		updateHighScoreText()
+		highScoreText.center.y -= size + 4
+		highScoreText.fontSize = 30
+		
+		text.onTouchUp(didTapText)
 		
 		for color in SimonColor.allCases {
 			let rect = Rectangle(canvas: canvas, width: size, height: size)
@@ -67,9 +96,11 @@ class SimonGame {
 			rect.center.y += translation.y
 			rect.color = color.color
 			rect.onTouchDown {
+				guard !self.isFlashingColors else { return }
 				rect.color = color.highlightedColor
 			}
 			rect.onTouchUp {
+				guard !self.isFlashingColors else { return }
 				rect.color = color.color
 				self.didTapColor(color)
 			}
@@ -82,18 +113,56 @@ class SimonGame {
 	}
 	
 	func didTapColor(_ color: SimonColor) {
-		print(color)
+		clickedColors.append(color)
+		
+		if colors.isEmpty || clickedColors.count == colors.count {
+			clickedColors.removeAll()
+			colors.append(.random())
+			score += 1
+			flashColors()
+		} else if Array(colors.prefix(upTo: clickedColors.count)) != clickedColors {
+			text.string = "Game over! Score: \(score). Tap here to play again."
+			highScore = max(highScore, score)
+			score = 0
+			clickedColors.removeAll()
+			colors.removeAll()
+		}
+		
+	}
+	
+	func didTapText() {
+		if colors.isEmpty {
+			colors.append(.random())
+			flashColors()
+		}
 	}
 	
 	func flashColors() {
+		text.string = "Score: \(score)"
 		isFlashingColors = true
 		
-		let flashDuration: Double = 0.7
-		let inBetweenTime: Double = 0.35
-		for (index, color) in colors.enumerated() {
+		let flashDuration = 0.25
+		let inBetweenTime: Double = 0.2
+		
+		var animations: [Animation] = []
+		
+		for color in colors {
 			let rect = rectangles[color]!
 			
+			animations.append(Animation(duration: flashDuration, delay: inBetweenTime) {
+				rect.color = color.highlightedColor
+			})
+			animations.append(Animation(duration: flashDuration, delay: inBetweenTime) {
+				rect.color = color.color
+			})
+			
 			// TODO: Do animations
+		}
+		
+		self.isFlashingColors = true
+		let animator = performAnimations(animations)
+		animator.onFinish {
+			self.isFlashingColors = false
 		}
 			
 	}
