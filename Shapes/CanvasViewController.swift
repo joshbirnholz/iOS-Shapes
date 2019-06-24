@@ -9,18 +9,21 @@
 import UIKit
 
 open class CanvasViewController: UIViewController {
-    
-    var animator:UIDynamicAnimator? = nil;
-    /// The gravity object
-    /// - localizationKey: Canvas.gravity
+
+	public var canvas: Canvas {
+		return view as! Canvas
+	}
+
+	/*
+	/// The gravity object
+	/// - localizationKey: Canvas.gravity
+    var animator: UIDynamicAnimator? = nil;
+	
     public let gravity = UIGravityBehavior()
     /// The collider object
     /// - localizationKey: Canvas.collider
     public let collider = UICollisionBehavior()
-	
-	public var canvas: Canvas {
-		return view as! Canvas
-	}
+
     override open func viewDidLoad() {
         super.viewDidLoad()
         animator = UIDynamicAnimator(referenceView: self.view);
@@ -40,6 +43,7 @@ open class CanvasViewController: UIViewController {
     public func addCollider(to: AbstractDrawable) {
         collider.addItem(to.backingView)
     }
+	*/
 	
 	override open func loadView() {
 		view = Canvas()

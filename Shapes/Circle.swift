@@ -73,7 +73,6 @@ public class Circle: Shape {
         default:
             return false
         }
-        return false
     }
 }
 
