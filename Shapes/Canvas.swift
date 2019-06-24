@@ -39,10 +39,13 @@ public class Canvas: UIView {
     
     /// The color to fill the canvas with.
     /// - localizationKey: Canvas.color
-    public var color = Color.clear {
-        didSet {
-            backgroundColor = color.uiColor
-        }
+	public var color: Color {
+		set {
+			backgroundColor = newValue.uiColor
+		}
+		get {
+			return backgroundColor?.color ?? .clear
+		}
     }
     
     /// The visible width and height of the canvas.

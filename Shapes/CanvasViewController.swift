@@ -66,6 +66,10 @@ open class CanvasViewController: UIViewController {
 		
 	}
 	
+	public func clear() {
+		canvas.clear()
+	}
+	
 	public typealias _ColorLiteralType = Color
 	
 }
