@@ -67,7 +67,7 @@ public class Circle: Shape {
         case let image as Image:
             let x = max(image.center.x - image.size.width/2, min(center.x, image.center.x + image.size.width/2))
             let y = max(image.center.y - image.size.height/2, min(center.y, image.center.y + image.size.height/2))
-            return center.distance(toPoint: Point(x:x,y:y)) < radius
+            return center.distance(to: Point(x:x,y:y)) < radius
         case let line as Line:
             return false
         default:

@@ -9,10 +9,37 @@
 import UIKit
 
 open class CanvasViewController: UIViewController {
+    
+    var animator:UIDynamicAnimator? = nil;
+    /// The gravity object
+    /// - localizationKey: Canvas.gravity
+    public let gravity = UIGravityBehavior()
+    /// The collider object
+    /// - localizationKey: Canvas.collider
+    public let collider = UICollisionBehavior()
 	
 	public var canvas: Canvas {
 		return view as! Canvas
 	}
+    override open func viewDidLoad() {
+        super.viewDidLoad()
+        animator = UIDynamicAnimator(referenceView: self.view);
+        gravity.gravityDirection = CGVector(dx: 0,dy: 0.8)
+        animator?.addBehavior(gravity);
+        
+        // We're bounching off the walls
+        collider.translatesReferenceBoundsIntoBoundary = true
+        animator?.addBehavior(collider)
+    }
+    
+    public func addGravity(to: AbstractDrawable) {
+        gravity.addItem(to.backingView)
+        collider.addItem(to.backingView)
+    }
+    
+    public func addCollider(to: AbstractDrawable) {
+        collider.addItem(to.backingView)
+    }
 	
 	override open func loadView() {
 		view = Canvas()

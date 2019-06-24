@@ -13,20 +13,17 @@ class ViewController: CanvasViewController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-        let rect = Rectangle(width: 20, height: 30)
-        rect.color = .blue
-		
-		canvas.onTouchUp {
-			let point = self.canvas.currentTouchPoints.first!
-			
-			let r2 = self.Circle(radius: 5)
-            r2.center = point
-            if (rect.overlaps(r2)) {
-                r2.color = .red
-            } else {
-                r2.color = .green
-            }
-		}
+        let wall1 = Rectangle(width: 20, height: 2)
+        wall1.center = Point(x: 20, y: -20)
+        addCollider(to: wall1)
+//        addGravity(to: rect)
+        canvas.onTouchUp {
+            let rect = self.Rectangle(width: 10, height: 5)
+            let point = self.canvas.currentTouchPoints.first!
+            rect.center = point
+            rect.color = .random()
+            self.addGravity(to: rect)
+        }
 	
 //		canvas.onTouchUp {
 //			let point = self.canvas.currentTouchPoints.first!
