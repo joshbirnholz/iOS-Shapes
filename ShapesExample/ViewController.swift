@@ -13,32 +13,46 @@ class ViewController: CanvasViewController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
-		canvas.onTouchUp { (point) in
-			let circle = self.Circle()
+	
+		canvas.onTouchUp {
+			let point = self.canvas.currentTouchPoints.first!
+			let circle = self.Circle(radius: 10)
 			circle.center = point
 			circle.color = .random()
-			
-			let moveRight = Animation(duration: 1, delay: 0) {
+
+			let moveRight = Animation(duration: 1) {
 				circle.center.x += 20
 				circle.color = .random()
 			}
-			let moveLeft = Animation(duration: 1, delay: 0) {
+			let moveLeft = Animation(duration: 1) {
 				circle.center.x -= 20
 				circle.color = .random()
 			}
-			let moveUp = Animation(duration: 1, delay: 0) {
+			let moveUp = Animation(duration: 1) {
 				circle.center.y += 20
 				circle.color = .random()
 			}
-			let moveDown = Animation(duration: 1, delay: 0) {
+			let moveDown = Animation(duration: 1) {
 				circle.center.y -= 20
 				circle.color = .random()
 			}
-			
-			animate(moveRight, moveUp, moveLeft, moveDown, loop: true)
+
+			let animator = performAnimations(moveRight, moveUp, moveLeft, moveDown, repeats: false)
+
+			circle.onTouchUp {
+				if animator.state == .active {
+					animator.stop()
+				} else {
+					animator.start()
+				}
+			}
+
+			animator.onFinish {
+//				animator.start()
+			}
+
 		}
-		
+	
 	}
 
 }

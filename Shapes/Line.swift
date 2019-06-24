@@ -58,7 +58,7 @@ public class Line: Shape {
         let length = distanceBetween(start: start, end: end)
         let modelSize = Size(width: length, height: thickness)
         
-		super.init(canvas: canvas, modelSize: modelSize, backingView: UIView())
+		super.init(canvas: canvas, modelSize: modelSize, backingView: AnimationLayerHitTestingView())
     
         self.center = centerOf(start: start, end: end)
     }

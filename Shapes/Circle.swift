@@ -47,7 +47,7 @@ public class Circle: Shape {
     /// - localizationKey: Circle(radius:)
 	public init(canvas: Canvas, radius: Double) {
         let diameter = radius * 2
-		super.init(canvas: canvas, modelSize: Size(width: diameter, height: diameter), backingView: UIView())
+		super.init(canvas: canvas, modelSize: Size(width: diameter, height: diameter), backingView: AnimationLayerHitTestingView())
     }
     
     internal override func sizeDidChange() {

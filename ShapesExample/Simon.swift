@@ -66,7 +66,7 @@ class SimonGame {
 			rect.center.x += translation.x
 			rect.center.y += translation.y
 			rect.color = color.color
-			rect.onTouchDown { _ in
+			rect.onTouchDown {
 				rect.color = color.highlightedColor
 			}
 			rect.onTouchUp {
