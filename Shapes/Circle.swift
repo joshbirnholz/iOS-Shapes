@@ -65,9 +65,11 @@ public class Circle: Shape {
             let y = max(rect.center.y - rect.size.height/2, min(center.y, rect.center.y + rect.size.height/2))
 			return center.distance(to: Point(x:x,y:y)) < radius
         case let image as Image:
-            let center = canvas.convertPointFromScreen(screenPoint: image.backingView.center)
-        case let text as Text:
-            let center = canvas.convertPointFromScreen(screenPoint: text.backingView.center)
+            let x = max(image.center.x - image.size.width/2, min(center.x, image.center.x + image.size.width/2))
+            let y = max(image.center.y - image.size.height/2, min(center.y, image.center.y + image.size.height/2))
+            return center.distance(to: Point(x:x,y:y)) < radius
+        case let line as Line:
+            return false
         default:
             return false
         }
