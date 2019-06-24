@@ -17,7 +17,7 @@
                BlueprintIdentifier = "5499E2DA229F75810085E4F0"
                BuildableName = "Shapes.framework"
                BlueprintName = "Shapes"
-               ReferencedContainer = "container:ShapesExample.xcodeproj">
+               ReferencedContainer = "container:Shapes.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -48,7 +48,7 @@
             BlueprintIdentifier = "5499E2DA229F75810085E4F0"
             BuildableName = "Shapes.framework"
             BlueprintName = "Shapes"
-            ReferencedContainer = "container:ShapesExample.xcodeproj">
+            ReferencedContainer = "container:Shapes.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -66,7 +66,7 @@
             BlueprintIdentifier = "5499E2DA229F75810085E4F0"
             BuildableName = "Shapes.framework"
             BlueprintName = "Shapes"
-            ReferencedContainer = "container:ShapesExample.xcodeproj">
+            ReferencedContainer = "container:Shapes.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
