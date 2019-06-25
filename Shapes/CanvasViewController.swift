@@ -73,3 +73,59 @@ open class CanvasViewController: UIViewController {
 	public typealias _ColorLiteralType = Color
 	
 }
+
+public extension CanvasViewController {
+	
+	/// Shows a popup alert with a message and an OK button.
+	///
+	/// - Parameters:
+	///   - message: The message to show in the alert.
+	///   - completion: A block of code called for when the alert is dismissed.
+	func showAlert(message: String, completion: (() -> Void)? = nil) {
+		let alert = UIAlertController(title: message, message: nil, preferredStyle: .alert)
+		let okAction = UIAlertAction(title: "OK", style: .default, handler: { _ in completion?() })
+		alert.addAction(okAction)
+		present(alert, animated: true, completion: nil)
+	}
+	
+	/// Shows a popup alert with a message. You can choose which options get shown.
+	///
+	/// - Parameters:
+	///   - message: The message to show in the alert.
+	///   - choices: The names of the buttons to show in the alert.
+	///   - completion: A block of code called for when one of the options is chosen.
+	func showChoice(message: String?, choices: [String], completion: @escaping (String) -> Void) {
+		let alert = UIAlertController(title: message, message: nil, preferredStyle: .alert)
+		for choice in choices {
+			let action = UIAlertAction(title: choice, style: choice.lowercased() == "cancel" ? .cancel : .default, handler: { _ in completion(choice) })
+			alert.addAction(action)
+		}
+		present(alert, animated: true, completion: nil)
+	}
+	
+	/// Shows a popup alert which asks for text.
+	///
+	/// - Parameters:
+	///   - message: The message to show in the alert.
+	///   - placeholder: The text shown in the text box when it's empty.
+	///   - text: The text already in the text box.
+	///   - showCancelButton: If this is true, the alert will show a cancel button.
+	///   - completion: A block of code called after text has been entered.
+	func askForText(message: String?, placeholder: String? = nil, text: String? = nil, showCancelButton: Bool = false, completion: @escaping (String) -> Void) {
+		let alert = UIAlertController(title: message, message: nil, preferredStyle: .alert)
+		alert.addTextField {
+			$0.placeholder = placeholder
+			$0.text = text
+		}
+		let okAction = UIAlertAction(title: "OK", style: .default, handler: { _ in completion(alert.textFields?.first?.text ?? "") })
+		alert.addAction(okAction)
+		
+		if showCancelButton {
+			let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+			alert.addAction(cancelAction)
+		}
+		
+		present(alert, animated: true, completion: nil)
+	}
+	
+}
