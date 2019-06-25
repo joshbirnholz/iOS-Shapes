@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		540BAA8B22C1BBD900B39772 /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540BAA8A22C1BBD900B39772 /* Text.swift */; };
 		5499E2DF229F75810085E4F0 /* Shapes.h in Headers */ = {isa = PBXBuildFile; fileRef = 5499E2DD229F75810085E4F0 /* Shapes.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5499E2F6229F75C30085E4F0 /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5499E2E8229F75C20085E4F0 /* Point.swift */; };
 		5499E2F7229F75C30085E4F0 /* TouchGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5499E2E9229F75C20085E4F0 /* TouchGestureRecognizer.swift */; };
@@ -17,7 +18,6 @@
 		5499E2FC229F75C30085E4F0 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5499E2EE229F75C30085E4F0 /* Color.swift */; };
 		5499E2FD229F75C30085E4F0 /* AbstractShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5499E2EF229F75C30085E4F0 /* AbstractShape.swift */; };
 		5499E2FE229F75C30085E4F0 /* Rectangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5499E2F0229F75C30085E4F0 /* Rectangle.swift */; };
-		5499E2FF229F75C30085E4F0 /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5499E2F1229F75C30085E4F0 /* Text.swift */; };
 		5499E300229F75C30085E4F0 /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5499E2F2229F75C30085E4F0 /* Size.swift */; };
 		5499E301229F75C30085E4F0 /* Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5499E2F3229F75C30085E4F0 /* Shadow.swift */; };
 		5499E302229F75C30085E4F0 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5499E2F4229F75C30085E4F0 /* Image.swift */; };
@@ -27,6 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		540BAA8A22C1BBD900B39772 /* Text.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
 		5499E2DB229F75810085E4F0 /* Shapes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Shapes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5499E2DD229F75810085E4F0 /* Shapes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Shapes.h; sourceTree = "<group>"; };
 		5499E2DE229F75810085E4F0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -39,7 +40,6 @@
 		5499E2EE229F75C30085E4F0 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		5499E2EF229F75C30085E4F0 /* AbstractShape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AbstractShape.swift; sourceTree = "<group>"; };
 		5499E2F0229F75C30085E4F0 /* Rectangle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rectangle.swift; sourceTree = "<group>"; };
-		5499E2F1229F75C30085E4F0 /* Text.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
 		5499E2F2229F75C30085E4F0 /* Size.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Size.swift; sourceTree = "<group>"; };
 		5499E2F3229F75C30085E4F0 /* Shadow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shadow.swift; sourceTree = "<group>"; };
 		5499E2F4229F75C30085E4F0 /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
@@ -92,7 +92,7 @@
 				5499E2F0229F75C30085E4F0 /* Rectangle.swift */,
 				5499E2F3229F75C30085E4F0 /* Shadow.swift */,
 				5499E2F2229F75C30085E4F0 /* Size.swift */,
-				5499E2F1229F75C30085E4F0 /* Text.swift */,
+				540BAA8A22C1BBD900B39772 /* Text.swift */,
 				5499E2E9229F75C20085E4F0 /* TouchGestureRecognizer.swift */,
 				5499E2DD229F75810085E4F0 /* Shapes.h */,
 				5499E2DE229F75810085E4F0 /* Info.plist */,
@@ -190,8 +190,8 @@
 				5499E2FD229F75C30085E4F0 /* AbstractShape.swift in Sources */,
 				5499E302229F75C30085E4F0 /* Image.swift in Sources */,
 				5499E2F8229F75C30085E4F0 /* AbstractDrawable.swift in Sources */,
-				5499E2FF229F75C30085E4F0 /* Text.swift in Sources */,
 				54CE1E5A22BFE4FD00A0F135 /* Animation.swift in Sources */,
+				540BAA8B22C1BBD900B39772 /* Text.swift in Sources */,
 				5499E2FA229F75C30085E4F0 /* Canvas.swift in Sources */,
 				5499E301229F75C30085E4F0 /* Shadow.swift in Sources */,
 				5499E2F7229F75C30085E4F0 /* TouchGestureRecognizer.swift in Sources */,

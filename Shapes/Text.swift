@@ -34,7 +34,7 @@ public class Text: AbstractDrawable {
         }
         set {
             backingViewAsLabel.text = newValue
-            udpateBackingViewSizeFromFont()
+            updateBackingViewSizeFromFont()
         }
     }
     
@@ -57,7 +57,7 @@ public class Text: AbstractDrawable {
         }
         set {
             backingViewAsLabel.font = backingViewAsLabel.font.withSize(CGFloat(newValue))
-            udpateBackingViewSizeFromFont()
+            updateBackingViewSizeFromFont()
         }
     }
     
@@ -70,10 +70,32 @@ public class Text: AbstractDrawable {
         set {
             if let font = UIFont.init(name: newValue, size: CGFloat(fontSize)) {
                 backingViewAsLabel.font = font
-                udpateBackingViewSizeFromFont()
+                updateBackingViewSizeFromFont()
             }
         }
     }
+	
+	/// The technique to use for aligning the text.
+	public var alignment: NSTextAlignment {
+		get {
+			return backingViewAsLabel.textAlignment
+		}
+		set {
+			backingViewAsLabel.textAlignment = newValue
+			updateBackingViewSizeFromFont()
+		}
+	}
+	
+	/// The maximum number of lines of text that should be shown. Set this value to 0 to use as many lines as needed.
+	public var numberOfLines: Int {
+		get {
+			return backingViewAsLabel.numberOfLines
+		}
+		set {
+			backingViewAsLabel.numberOfLines = newValue
+			updateBackingViewSizeFromFont()
+		}
+	}
     
     /// Creates text centered on the canvas.
     ///
@@ -97,10 +119,10 @@ public class Text: AbstractDrawable {
         // we'll update our size below as a result of calling udpateBackingViewSizeFromFont().
 		super.init(canvas: canvas, modelSize: Size(width: 0, height: 0), backingView: label)
         
-        udpateBackingViewSizeFromFont()
+        updateBackingViewSizeFromFont()
     }
     
-    private func udpateBackingViewSizeFromFont() {
+    private func updateBackingViewSizeFromFont() {
         let preferredSize = backingViewAsLabel.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude))
         udpateBackingViewSizeFromScreenSize(screenSize: Size(preferredSize))
     }
